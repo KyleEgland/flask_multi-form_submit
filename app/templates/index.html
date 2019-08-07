@@ -1,0 +1,90 @@
+{# index.html #}
+{# This is the main/home page #}
+{% extends 'base.html' %}
+{% block content %}
+<h1>Testing form submission using jQuery</h1>
+<p>
+    There are (3) forms below (using navs) which can each be individually submitted as well as submitted in totallity (I.e. one form).
+</p>
+<ul class="nav nav-tabs" id="formTabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="userInfoTab" data-toggle="tab" href="#userInfoFormContent" role="tab" aria-controls="userInfoFormContent" aria-selected="true">User Information Form</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="userContactTab" data-toggle="tab" href="#userContactFormContent" role="tab" aria-controls="userContactFormContent" aria-selected="false">User Contact Form</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="userAddrTab" data-toggle="tab" href="#userAddrFormContent" role="tab" aria-controls="userAddrFormContent" aria-selected="false">User Address Form</a>
+    </li>
+</ul>
+<div class="tab-content" id="userFormsContent">
+    <div class="tab-pane fade show active" id="userInfoFormContent" role="tabpanel" aria-labelledby="userContactTab">
+        {# User Information Form #}
+        <form action="{{ url_for('main.user_info_check') }}" id="userInfoForm">
+            <div class="form-group">
+                {{ info_form.username.label(for="usernameInput") }}
+                {{ info_form.username(class_="form-control", id="usernameInput", value="username", **{"aria-describedby":"usernameInputHelp"}) }}
+                <small id="usernameInputHelp" class="form-text text-muted">Enter a username</small>
+            </div>
+            <div class="form-group">
+                {{ info_form.fname.label(for="fnameInput") }}
+                {{ info_form.fname(class_="form-control", id="fnameInput", value="John", **{"aria-describedby":"fnameInputHelp"}) }}
+                <small id="fnameInputHelp" class="form-text text-muted">Enter your first name</small>
+            </div>
+            <div class="form-group">
+                {{ info_form.lname.label(for="lnameInput") }}
+                {{ info_form.lname(class_="form-control", id="lnameInput", value="Doe", **{"aria-describedby":"lnameInputHelp"}) }}
+                <small id="lnameInputHelp" class="form-text text-muted">Enter your last name</small>
+            </div>
+            {{ info_form.submit(class_="btn btn-dark", id="userInfoSubmit", **{"data-formname":"userInfoForm"}) }}
+        </form>
+    </div>
+    <div class="tab-pane fade" id="userContactFormContent" role="tabpanel" aria-labelledby="userContactTab">
+        {# User Contact Form #}
+        <form action="{{ url_for('main.user_info_check') }}" id="userContactForm">
+            <div class="form-group">
+                {{ contact_form.email.label(for="emailInput") }}
+                {{ contact_form.email(class_="form-control", id="streetInput", value="john.doe@email.com", **{"aria-describedby":"emailInputHelp"}) }}
+                <small id="emailInputHelp" class="form-text text-muted">Enter your email address</small>
+            </div>
+            <div class="form-group">
+                {{ contact_form.phone.label(for="phoneInput") }}
+                {{ contact_form.phone(class_="form-control", id="phoneInput", value="5558675309", **{"aria-describedby":"phoneInputHelp"}) }}
+                <small id="phoneInputHelp" class="form-text text-muted">Enter your phone number</small>
+            </div>
+            {{ contact_form.submit(class_="btn btn-dark", id="userInfoSubmit", **{"data-formname":"userContactForm"})}}
+        </form>
+    </div>
+    <div class="tab-pane fade" id="userAddrFormContent" role="tabpanel" aria-labelledby="userAddrTab">
+        {# User Address Form #}
+        <form action="{{ url_for('main.user_info_check') }}" id="userAddrForm">
+            <div class="form-group">
+                {{ addr_form.street.label(for="streetInput") }}
+                {{ addr_form.street(class_="form-control", id="streetInput", value="1234 Main St.", **{"aria-describedby":"streetInputHelp"}) }}
+                <small id="streetInputHelp" class="form-text text-muted">Enter your street address</small>
+            </div>
+            <div class="form-group">
+                {{ addr_form.city.label(for="cityInput") }}
+                {{ addr_form.city(class_="form-control", id="cityInput", value="Small Town", **{"aria-describedby":"cityInputHelp"}) }}
+                <small id="cityInputHelp" class="form-text text-muted">Enter your city</small>
+            </div>
+            <div class="form-group">
+                {{ addr_form.state.label(for="stateInput") }}
+                {{ addr_form.state(class_="form-control", id="stateInput", value="IA", **{"aria-describedby":"stateInputHelp"}) }}
+                <small id="stateInputHelp" class="form-text text-muted">Enter your state</small>
+            </div>
+            <div class="form-group">
+                {{ addr_form.zip.label(for="zipInput") }}
+                {{ addr_form.zip(class_="form-control", id="zipInput", value="50536", **{"aria-describedby":"zipInputHelp"}) }}
+                <small id="zipInputHelp" class="form-text text-muted">Enter your zip code</small>
+            </div>
+            {{ addr_form.submit(class_="btn btn-dark", id="userInfoSubmit", **{"data-formname":'["userInfoForm", "userContactForm", "userAddrForm"]'})}}
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script src="{{ url_for('static', filename='javascript/main/app.js') }}"></script>
+{% endblock %}
